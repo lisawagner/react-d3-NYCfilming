@@ -1,12 +1,12 @@
 import { LineChart } from "./components/LineChart/LineChart";
-import { BarGraph } from "./components/BarGraph/BarGraph";
+// import { BarGraph } from "./components/BarGraph/BarGraph";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <LineChart />
-      <BarGraph />
+      {/* <BarGraph /> */}
     </div>
   );
 }
