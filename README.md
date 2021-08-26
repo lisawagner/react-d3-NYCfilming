@@ -13,7 +13,7 @@ Filter and transform the data into a suitable format for the end-user.
 
 ### `Visualize`
 
-Present the data for the user in an clear and uncomplicated visual form:
+Present the data for the user in a clear and uncomplicated visual form:
 
 - set up svg and chart refs
 - set up x and y scales
