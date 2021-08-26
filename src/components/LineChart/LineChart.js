@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import "./LineChart.css";
+import "./styles.css";
 
-const LineChart = () => {
+export const LineChart = () => {
   // Render the graph and useEffect
   const d3Chart = useRef();
 
@@ -139,5 +139,3 @@ const LineChart = () => {
     </div>
   );
 };
-
-export default LineChart;
