@@ -1,6 +1,6 @@
 # Data Visualization with Reactjs and D3js
 
-This project provides a visual representation of 'NYC filming permits 2021' in JSON format from [The City of New York](https://data.cityofnewyork.us/resource/tg4x-b46p.json)
+This project provides a visual representation of 'NYC filming permits 2021' in JSON format from the [City of New York](https://data.cityofnewyork.us/resource/tg4x-b46p.json)
 
 ## The Basics
 
@@ -23,4 +23,4 @@ Present the data for the user in an clear and uncomplicated visual form:
 
 ### `Sample`
 
-![Graph of NYC filming permits 2021 by date](/components/images/nyc-filmings-graph.png "Graph of 2021 NYC filming permits")
+![Graph of NYC filming permits 2021 by date](nyc-filmings-graph.png "Graph of 2021 NYC filming permits")
