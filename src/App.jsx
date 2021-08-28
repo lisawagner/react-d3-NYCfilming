@@ -1,6 +1,6 @@
 import { LineChart } from "./components/LineChart/LineChart";
 import { Sample } from "./components/Sample/Sample";
-import { BarChart } from "./components/BarChart.jsx/BarChart";
+import { BarChart } from "./components/BarChart/BarChart";
 // import { BarGraph } from "./components/BarGraph/BarGraph";
 import "./App.css";
 
