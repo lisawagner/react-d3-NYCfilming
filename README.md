@@ -48,4 +48,4 @@ Present the data for the user in a clear and uncomplicated visual form:
 
 ### `Sample`
 
-![Graph of NYC filming permits 2021 by date](/src/images/nyc-filmings-graph.png "Graph of 2021 NYC filming permits")
+![Graph of NYC filming permits 2021 by date](./images/nyc-filmings-graph.png "Graph of 2021 NYC filming permits")
