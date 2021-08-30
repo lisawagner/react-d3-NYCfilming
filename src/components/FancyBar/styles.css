@@ -1,0 +1,21 @@
+.f-bar {
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+}
+pre {
+  font-size: 7em;
+}
+.tick line {
+  stroke: #c0c0bb;
+}
+.tick text {
+  fill: #635f5d;
+}
+.mark {
+  fill: #137b80;
+}
+.axis-label {
+  fill: #635f5d;
+  font-size: 2.15em;
+}
