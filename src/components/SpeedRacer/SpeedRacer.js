@@ -33,13 +33,9 @@ export const SpeedRacer = () => {
       // const yesDope = bikers.filter((biker) => biker.Doping !== "");
       // console.log("Doper:", yesDope);
 
-      const toolTip = (biker) => {
-        const { Name, Nationality, Time } = biker;
-
-        return `${Name} ${Nationality} ${Time}`;
-      };
-      console.log(toolTip);
-
+      const elBiker = document.getElementById("message");
+      const message = bikers[21].Name;
+      elBiker.textContent = message;
       // work with json data here
       console.log("Sample Biker:", bikers[34]);
     })
@@ -51,6 +47,7 @@ export const SpeedRacer = () => {
     <div>
       <h1>SpeedRacer</h1>
       <div id="svgData"></div>
+      <div id="message"></div>
     </div>
   );
 };
