@@ -1,7 +1,8 @@
-import { LineChart } from "./components/LineChart/LineChart";
-import { Lchart } from "./components/Lchart/Lchart";
-import { FancyBar } from "./components/FancyBar/FancyBar";
-import { PetalPlot } from "./components/PetalPlot/PetalPlot";
+// import { LineChart } from "./components/LineChart/LineChart";
+// import { Lchart } from "./components/Lchart/Lchart";
+// import { FancyBar } from "./components/FancyBar/FancyBar";
+// import { PetalPlot } from "./components/PetalPlot/PetalPlot";
+import { SpeedRacer } from "./components/SpeedRacer/SpeedRacer";
 
 // import { Sample } from "./components/Sample/Sample";
 // import { BarChart } from "./components/BarChart/BarChart";
@@ -11,10 +12,11 @@ import "./App.css";
 const App = () => {
   return (
     <div className="App">
-      <PetalPlot />
+      <SpeedRacer />
+      {/* <PetalPlot />
       <FancyBar />
       <Lchart />
-      <LineChart />
+      <LineChart /> */}
       {/* <Sample /> */}
 
       {/* <BarChart /> */}
