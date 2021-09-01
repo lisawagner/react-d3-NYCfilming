@@ -15,7 +15,7 @@ const cyclist = {
 };
 const cyclists = [cyclist];
 
-console.log(cyclist);
+// console.log(cyclist);
 
 export const SpeedRacer = () => {
   fetch(jsonURL)
@@ -23,19 +23,25 @@ export const SpeedRacer = () => {
       return response.json();
     })
     .then((bikers) => {
-      // for (let i = 0; i < bikers.length; i++) {
-      //   const biker = bikers[i];
-      //   console.log(biker.Name);
-      // }
-      bikers.forEach((biker) => {
-        console.log("what:", biker.Name);
-      });
-      const tempYears = (biker) => {
-        console.log(biker.Year);
+      // bikers.map((biker) => console.log("Dudes:", biker.Name));
+      // const Years = bikers.map((biker) => biker.Year);
+      // console.log(Years);
+
+      // const noDope = bikers.filter((biker) => biker.Doping === "");
+      // console.log("NoDope:", noDope);
+
+      // const yesDope = bikers.filter((biker) => biker.Doping !== "");
+      // console.log("Doper:", yesDope);
+
+      const toolTip = (biker) => {
+        const { Name, Nationality, Time } = biker;
+
+        return `${Name} ${Nationality} ${Time}`;
       };
-      bikers.forEach(tempYears);
+      console.log(toolTip);
+
       // work with json data here
-      console.log("bikers:", bikers[34]);
+      console.log("Sample Biker:", bikers[34]);
     })
     .catch((err) => {
       console.log(err);
