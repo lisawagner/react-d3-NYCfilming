@@ -1,11 +1,11 @@
 import * as d3 from "d3";
 import { format } from "d3";
-import "./styles.css";
+import "./gstyles.css";
 
 const jsonURL =
   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
-export const SpeedRacer = () => {
+export const GraphRacer = () => {
   // fetch(jsonURL)
   // .then((response) => {
   //   return response.json();
@@ -115,16 +115,16 @@ export const SpeedRacer = () => {
   };
 
   d3.json(jsonURL).then((data) => {
-    data.forEach((d) => {
-      // + parses strings into num
-      d.Year = +d.Year;
-    });
+    // data.forEach((d) => {
+    //   // + parses strings into num
+    //   d.Year = +d.Year;
+    // });
     render(data);
   });
 
   return (
     <div>
-      <h1>SpeedRacer</h1>
+      <h1>GraphRacer</h1>
       <svg></svg>
       <div id="svgData"></div>
       <div id="message"></div>
