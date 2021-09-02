@@ -1,5 +1,6 @@
 circle {
   fill: steelblue;
+  opacity: 0.5;
 }
 text {
   font-family: sans-serif;

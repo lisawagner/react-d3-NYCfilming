@@ -1,11 +1,11 @@
 import * as d3 from "d3";
 import { format } from "d3";
-import "./gstyles.css";
+import "./pstyles.css";
 
 const jsonURL =
   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
-export const GraphRacer = () => {
+export const PeeRacer = () => {
   // fetch(jsonURL)
   // .then((response) => {
   //   return response.json();
@@ -49,8 +49,22 @@ export const GraphRacer = () => {
   const margin = { top: 40, right: 30, bottom: 50, left: 160 };
   const innerWidth = width - margin.right - margin.left;
   const innerHeight = height - margin.top - margin.bottom;
+  const circleRadius = 8;
+
+  const gTitle = "Goofing off with D3js";
+  const xLabel = "Racetime in Seconds";
+  const yLabel = "Place";
 
   const svg = d3.select("svg").attr("width", width).attr("height", height);
+
+  // "Time": "36:50",
+  // "Place": 1,
+  // "Seconds": 2210,
+  // "Name": "Marco Pantani",
+  // "Year": 1995,
+  // "Nationality": "ITA",
+  // "Doping": "Alleged drug use during 1995 due to high hematocrit levels",
+  // "URL": "https://en.wikipedia.org/wiki/Marco_Pantani#Alleged_drug_use"
 
   const render = (data) => {
     const xValue = (d) => d.Seconds;
@@ -59,15 +73,17 @@ export const GraphRacer = () => {
     // set up canvas scale
     const xScale = d3
       .scaleLinear()
-      .domain([0, d3.max(data, xValue)])
+      // d3 has a function to go from min-max called extent
+      // .domain([d3.min(data, xValue), d3.max(data, xValue)])
+      .domain(d3.extent(data, xValue))
       .range([0, innerWidth])
       .nice();
 
     const yScale = d3
-      .scalePoint()
-      .domain(data.map(yValue))
-      .range([0, innerHeight])
-      .padding(0.5);
+      .scaleLinear()
+      .domain(d3.extent(data, yValue))
+      .range([0, innerHeight]);
+    // .padding(0.5);
 
     // d3 margin convention
     const g = svg
@@ -85,7 +101,19 @@ export const GraphRacer = () => {
 
     const yAxis = d3.axisLeft(yScale).tickSize(-innerWidth);
 
-    g.append("g").call(yAxis).select(".domain").remove();
+    const yAxisG = g.append("g").call(yAxis);
+    yAxisG.select(".domain").remove();
+
+    // add yAxis label
+    yAxisG
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("y", -25)
+      .attr("x", -innerHeight / 2)
+      .attr("fill", "black")
+      .attr("transform", `rotate(-90)`)
+      .attr("text-anchor", "middle")
+      .text(yLabel);
 
     const xAxisG = g
       .append("g")
@@ -93,14 +121,14 @@ export const GraphRacer = () => {
       .attr("transform", `translate(0,${innerHeight})`);
 
     xAxisG.select(".domain").remove();
-
+    // add xAxis label
     xAxisG
       .append("text")
       .attr("class", "axis-label")
       .attr("y", 30)
       .attr("x", innerWidth / 2)
       .attr("fill", "black")
-      .text("Racetime in Seconds");
+      .text(xLabel);
 
     g.selectAll("circle")
       .data(data)
@@ -108,25 +136,22 @@ export const GraphRacer = () => {
       .append("circle")
       .attr("cy", (d) => yScale(yValue(d)))
       .attr("cx", (d) => xScale(xValue(d)))
-      .attr("r", 7);
+      .attr("r", circleRadius);
 
-    g.append("text")
-      .attr("class", "title")
-      .attr("y", -10)
-      .text("Goofing off with D3js");
+    g.append("text").attr("class", "title").attr("y", -10).text(gTitle);
   };
 
   d3.json(jsonURL).then((data) => {
-    data.forEach((d) => {
-      // + parses strings into num
-      d.Year = +d.Year;
-    });
+    // data.forEach((d) => {
+    //   // + parses strings into num
+    //   d.Year = +d.Year;
+    // });
     render(data);
   });
 
   return (
     <div>
-      <h1>GraphRacer</h1>
+      <h1>PeeRacer</h1>
       <svg></svg>
       <div id="svgData"></div>
       <div id="message"></div>
