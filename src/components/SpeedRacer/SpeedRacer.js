@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { format } from "d3";
 import "./styles.css";
 
 const jsonURL =
@@ -45,7 +46,7 @@ export const SpeedRacer = () => {
 
   const width = 960;
   const height = 800;
-  const margin = { top: 30, right: 30, bottom: 50, left: 160 };
+  const margin = { top: 40, right: 30, bottom: 50, left: 160 };
   const innerWidth = width - margin.right - margin.left;
   const innerHeight = height - margin.top - margin.bottom;
 
@@ -71,11 +72,33 @@ export const SpeedRacer = () => {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
+    // format xAxis
+    const xAxisFormat = (number) => format(".4s")(number).replace("k", "s");
+    const xAxis = d3
+      .axisBottom(xScale)
+      .tickFormat(xAxisFormat)
+      .tickSize(-innerHeight);
+
     // set the axis
-    g.append("g").call(d3.axisLeft(yScale));
     g.append("g")
-      .call(d3.axisBottom(xScale))
+      .call(d3.axisLeft(yScale))
+      .selectAll(".domain, .tick line")
+      .remove();
+
+    const xAxisG = g
+      .append("g")
+      .call(xAxis)
       .attr("transform", `translate(0,${innerHeight})`);
+
+    xAxisG.select(".domain").remove();
+
+    xAxisG
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("y", 30)
+      .attr("x", innerWidth / 2)
+      .attr("fill", "black")
+      .text("Racetime in Seconds");
 
     g.selectAll("rect")
       .data(data)
@@ -84,6 +107,11 @@ export const SpeedRacer = () => {
       .attr("y", (d) => yScale(yValue(d)))
       .attr("width", (d) => xScale(xValue(d)))
       .attr("height", yScale.bandwidth());
+
+    g.append("text")
+      .attr("class", "title")
+      .attr("y", -10)
+      .text("Goofing off with D3js");
   };
 
   d3.json(jsonURL).then((data) => {
