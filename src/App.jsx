@@ -1,29 +1,11 @@
-// import { LineChart } from "./components/LineChart/LineChart";
-// import { Lchart } from "./components/Lchart/Lchart";
-// import { FancyBar } from "./components/FancyBar/FancyBar";
-// import { PetalPlot } from "./components/PetalPlot/PetalPlot";
-// import { SpeedRacer } from "./components/SpeedRacer/SpeedRacer"
-// import { PeeRacer } from "./components/SpeedRacer/PeeRacer";
-import { LineRacer } from "./components/SpeedRacer/LineRacer";
-
-// import { Sample } from "./components/Sample/Sample";
-// import { BarChart } from "./components/BarChart/BarChart";
-// import { BarGraph } from "./components/BarGraph/BarGraph";
 import "./App.css";
+// import { LineRacer } from "./components/SpeedRacer/LineRacer";
+import { FruitUpdate } from "./components/Sample/FruitUpdate";
 
 const App = () => {
   return (
     <div className="App">
-      <LineRacer />
-      {/* <SpeedRacer /> */}
-      {/* <PetalPlot />
-      <FancyBar />
-      <Lchart />
-      <LineChart /> */}
-      {/* <Sample /> */}
-
-      {/* <BarChart /> */}
-      {/* <BarGraph /> */}
+      <FruitUpdate />
     </div>
   );
 };
