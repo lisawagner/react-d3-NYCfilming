@@ -4,7 +4,7 @@ import "./pstyles.css";
 const jsonURL =
   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
-export const PeeRacer = () => {
+export const LineRacer = () => {
   // fetch(jsonURL)
   // .then((response) => {
   //   return response.json();
@@ -136,7 +136,7 @@ export const PeeRacer = () => {
 
   return (
     <div>
-      <h1>PeeRacer</h1>
+      <h1>LineRacer</h1>
       <svg></svg>
       <div id="svgData"></div>
       <div id="message"></div>

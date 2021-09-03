@@ -3,7 +3,8 @@
 // import { FancyBar } from "./components/FancyBar/FancyBar";
 // import { PetalPlot } from "./components/PetalPlot/PetalPlot";
 // import { SpeedRacer } from "./components/SpeedRacer/SpeedRacer"
-import { PeeRacer } from "./components/SpeedRacer/PeeRacer";
+// import { PeeRacer } from "./components/SpeedRacer/PeeRacer";
+import { LineRacer } from "./components/SpeedRacer/LineRacer";
 
 // import { Sample } from "./components/Sample/Sample";
 // import { BarChart } from "./components/BarChart/BarChart";
@@ -13,7 +14,7 @@ import "./App.css";
 const App = () => {
   return (
     <div className="App">
-      <PeeRacer />
+      <LineRacer />
       {/* <SpeedRacer /> */}
       {/* <PetalPlot />
       <FancyBar />
