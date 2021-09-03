@@ -2,7 +2,7 @@
 
 import React from "react";
 import * as d3 from "d3";
-import "./fruitStyles.css";
+import "./nestedFruitStyles.css";
 
 // const jsonURL =
 //   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
@@ -20,30 +20,36 @@ const xPosition = (d, i) => i * 120 + 60;
 
 // render logic component
 const renderViz = (svgElement, { fruits, height }) => {
-  const circles = svgElement
-    .selectAll("circle") // makes empty selection
-    .data(fruits, (d) => d.id); //creates and returns data-join with your data array(fruits)
-  circles
+  const groups = svgElement
+    .selectAll("g") // makes empty selection
+    .data(fruits, (d) => d.id); //creates & returns data-join with data array(fruits)
+  const groupsEnter = groups
     .enter() // computes the () selection of circles with (5) data elements
-    .append("circle")
-    .attr("cx", xPosition)
-    .attr("cy", height / 2)
-    .attr("r", 0)
-    .merge(circles) //merges the enter and update selections
-    .attr("fill", (d) => colorScale(d.type))
-    .transition()
-    .duration(1000)
-    .attr("cx", xPosition)
-    .attr("r", (d) => radiusScale(d.type));
+    .append("g");
 
-  circles.exit().transition().duration(1000).attr("r", 0).remove();
+  groupsEnter
+    .merge(groups)
+    .attr("transform", (d, i) => `translate(${i * 120 + 60},${height / 2})`);
+  groups.exit().remove();
+
+  groupsEnter
+    .append("circle")
+    .merge(groups.select("circle"))
+    .attr("r", (d) => radiusScale(d.type))
+    .attr("fill", (d) => colorScale(d.type));
+
+  groupsEnter
+    .append("text")
+    .merge(groups.select("text"))
+    .text((d) => d.type)
+    .attr("y", 80);
 };
 
-export const FruitUpdate = () => {
+export const NestedFruitUpdate = () => {
   const svgRef = React.useRef();
 
   React.useEffect(() => {
-    const width = 960;
+    const width = 700;
     const height = 200;
 
     const svgElement = d3
@@ -81,7 +87,7 @@ export const FruitUpdate = () => {
 
   return (
     <div>
-      <h1>FruitUpdate</h1>
+      <h1>NestedFruitUpdate</h1>
       <svg width="960" height="500" ref={svgRef}></svg>
       <div id="message"></div>
     </div>
