@@ -14,6 +14,16 @@ export const FruitUpdate = () => {
     const width = 960;
     const height = 500;
 
+    const colorScale = d3
+      .scaleOrdinal()
+      .domain(["apple", "lemon"])
+      .range(["red", "#EAE600"]);
+
+    const radiusScale = d3
+      .scaleOrdinal()
+      .domain(["apple", "lemon"])
+      .range([50, 30]);
+
     const svgElement = d3
       .select(svgRef.current)
       .attr("width", width)
@@ -26,10 +36,14 @@ export const FruitUpdate = () => {
         .data(fruits) //creates and returns data-join with your data array(fruits)
         .enter() // computes the () selection of circles with data elements
         .append("circle")
-        .attr("fill", "red")
+        .attr("fill", (d) => colorScale(d.type))
         .attr("cx", (d, i) => i * 120 + 60)
         .attr("cy", height / 2)
-        .attr("r", 50);
+        .attr("r", (d) => radiusScale(d.type));
+      svgElement
+        .selectAll("circle")
+        .attr("fill", (d) => colorScale(d.type))
+        .attr("r", (d) => radiusScale(d.type));
 
       svgElement.selectAll("circle").data(fruits).exit().remove();
     };
@@ -39,11 +53,17 @@ export const FruitUpdate = () => {
 
     renderViz(svgElement, { fruits });
 
+    // state manipulation logic (eat an apple)
     setTimeout(() => {
-      // state manipulation logic (eat an apple)
       fruits.pop();
       renderViz(svgElement, { fruits });
     }, 1000);
+
+    // state manipulation logic (replace apple with lemon)
+    setTimeout(() => {
+      fruits[2].type = "lemon";
+      renderViz(svgElement, { fruits });
+    }, 2000);
   }, []);
 
   return (
