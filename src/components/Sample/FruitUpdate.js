@@ -16,21 +16,27 @@ const radiusScale = d3
   .domain(["apple", "lemon"])
   .range([50, 30]);
 
+const xPosition = (d, i) => i * 120 + 60;
+
 // render logic component
 const renderViz = (svgElement, { fruits, height }) => {
   const circles = svgElement
     .selectAll("circle") // makes empty selection
-    .data(fruits); //creates and returns data-join with your data array(fruits)
+    .data(fruits, (d) => d.id); //creates and returns data-join with your data array(fruits)
   circles
     .enter() // computes the () selection of circles with (5) data elements
     .append("circle")
-    .attr("cx", (d, i) => i * 120 + 60)
+    .attr("cx", xPosition)
     .attr("cy", height / 2)
+    .attr("r", 0)
     .merge(circles) //merges the enter and update selections
     .attr("fill", (d) => colorScale(d.type))
+    .transition()
+    .duration(1000)
+    .attr("cx", xPosition)
     .attr("r", (d) => radiusScale(d.type));
 
-  circles.exit().remove();
+  circles.exit().transition().duration(1000).attr("r", 0).remove();
 };
 
 export const FruitUpdate = () => {
@@ -45,8 +51,8 @@ export const FruitUpdate = () => {
       .attr("width", width)
       .attr("height", height);
 
-    const makeFruit = (type) => ({ type });
-    const fruits = d3.range(5).map(() => makeFruit("apple"));
+    const makeFruit = (type) => ({ type, id: Math.random() });
+    let fruits = d3.range(5).map(() => makeFruit("apple"));
 
     // render fruits
     const render = () => {
@@ -57,16 +63,20 @@ export const FruitUpdate = () => {
     // state manipulation logic (update: eat an apple)
     setTimeout(() => {
       fruits.pop();
-      //   renderViz(svgElement, { fruits });
       render();
     }, 1000);
 
     // state manipulation logic (update: replace apple with lemon)
     setTimeout(() => {
       fruits[2].type = "lemon";
-      //   renderViz(svgElement, { fruits });
       render();
     }, 2000);
+
+    // state manipulation logic (update: eat another apple)
+    setTimeout(() => {
+      fruits = fruits.filter((d, i) => i !== 1);
+      render();
+    }, 3000);
   }, []);
 
   return (
