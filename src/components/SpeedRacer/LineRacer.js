@@ -51,14 +51,15 @@ export const LineRacer = () => {
   const circleRadius = 8;
 
   const gTitle = "Goofing off with D3js";
-  const xLabel = "Racetime in Seconds";
-  const yLabel = "Place";
+  const xLabel = "Year";
+  const yLabel = "Racetime";
 
   const svg = d3.select("svg").attr("width", width).attr("height", height);
 
   const render = (data) => {
-    const xValue = (d) => d.Seconds;
-    const yValue = (d) => d.Place;
+    const xValue = (d) => d.Year;
+    // const yValue = (d) => d.Time;
+    const yValue = (d) => d3.timeParse("%M:%S")(d.Time);
 
     // set up canvas scale
     const xScale = d3
@@ -70,8 +71,9 @@ export const LineRacer = () => {
       .nice();
 
     const yScale = d3
-      .scaleLinear()
-      .domain(d3.extent(data, yValue))
+      .scaleTime()
+      .domain([d3.max(data, yValue), d3.min(data, yValue)])
+      // .range([0, innerHeight])
       .range([0, innerHeight])
       .nice();
 
@@ -80,26 +82,13 @@ export const LineRacer = () => {
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
-    const xAxis = d3.axisBottom(xScale).tickSize(-innerHeight).tickPadding(8);
+    const xAxis = d3
+      .axisBottom(xScale)
+      .tickFormat((d) => d)
+      .tickSize(-innerHeight)
+      .tickPadding(8);
 
     // set the axis
-
-    const yAxis = d3.axisLeft(yScale).tickSize(-innerWidth).tickPadding(8);
-
-    const yAxisG = g.append("g").call(yAxis);
-    yAxisG.select(".domain").remove();
-
-    // add yAxis label
-    yAxisG
-      .append("text")
-      .attr("class", "axis-label")
-      .attr("y", -25)
-      .attr("x", -innerHeight / 2)
-      .attr("fill", "black")
-      .attr("transform", `rotate(-90)`)
-      .attr("text-anchor", "middle")
-      .text(yLabel);
-
     const xAxisG = g
       .append("g")
       .call(xAxis)
@@ -115,22 +104,52 @@ export const LineRacer = () => {
       .attr("fill", "black")
       .text(xLabel);
 
+    const yAxis = d3
+      .axisLeft(yScale)
+      .tickFormat(d3.timeFormat("%M:%S"))
+      .tickSize(-innerWidth)
+      .tickPadding(8);
+
+    const yAxisG = g.append("g").call(yAxis);
+    yAxisG.select(".domain").remove();
+
+    // add yAxis label
+    yAxisG
+      .append("text")
+      .attr("class", "axis-label")
+      .attr("y", -40)
+      .attr("x", -innerHeight / 2)
+      .attr("fill", "black")
+      .attr("transform", `rotate(-90)`)
+      .attr("text-anchor", "middle")
+      .text(yLabel);
+
     g.selectAll("circle")
       .data(data)
       .enter()
       .append("circle")
-      .attr("cy", (d) => yScale(yValue(d)))
+      // .attr("cx", (d) => xScale(new Date(d.Year, 0, 1)))
+      // .attr("cx", (d) => yScale(new Date(0, 0, 0, 0, 0, d.Seconds)))
       .attr("cx", (d) => xScale(xValue(d)))
+      .attr("cy", (d) => yScale(yValue(d)))
       .attr("r", circleRadius);
 
-    g.append("text").attr("class", "title").attr("y", -10).text(gTitle);
+    svg
+      .append("text")
+      .attr("class", "title")
+      .attr("x", width / 2.5)
+      .attr("y", 30)
+      .text(gTitle);
   };
 
   d3.json(jsonURL).then((data) => {
-    // data.forEach((d) => {
-    //   // + parses strings into num
-    //   d.Year = +d.Year;
-    // });
+    // parse data into appropriate format
+    data.forEach((d) => {
+      // + parses strings into num
+      // d.Year = +d.Year;
+      // d.Time = d3.timeParse("%M:%S")(d.Time);
+      // console.log(d.Time);
+    });
     render(data);
   });
 
