@@ -6,6 +6,32 @@ import "./fruitStyles.css";
 
 // const jsonURL =
 //   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
+const colorScale = d3
+  .scaleOrdinal()
+  .domain(["apple", "lemon"])
+  .range(["red", "#EAE600"]);
+
+const radiusScale = d3
+  .scaleOrdinal()
+  .domain(["apple", "lemon"])
+  .range([50, 30]);
+
+// render logic component
+const renderViz = (svgElement, { fruits, height }) => {
+  const circles = svgElement
+    .selectAll("circle") // makes empty selection
+    .data(fruits); //creates and returns data-join with your data array(fruits)
+  circles
+    .enter() // computes the () selection of circles with (5) data elements
+    .append("circle")
+    .attr("cx", (d, i) => i * 120 + 60)
+    .attr("cy", height / 2)
+    .merge(circles) //merges the enter and update selections
+    .attr("fill", (d) => colorScale(d.type))
+    .attr("r", (d) => radiusScale(d.type));
+
+  circles.exit().remove();
+};
 
 export const FruitUpdate = () => {
   const svgRef = React.useRef();
@@ -14,55 +40,32 @@ export const FruitUpdate = () => {
     const width = 960;
     const height = 500;
 
-    const colorScale = d3
-      .scaleOrdinal()
-      .domain(["apple", "lemon"])
-      .range(["red", "#EAE600"]);
-
-    const radiusScale = d3
-      .scaleOrdinal()
-      .domain(["apple", "lemon"])
-      .range([50, 30]);
-
     const svgElement = d3
       .select(svgRef.current)
       .attr("width", width)
       .attr("height", height);
 
-    // render logic
-    const renderViz = (svgElement, { fruits }) => {
-      svgElement
-        .selectAll("circle") // makes empty selection
-        .data(fruits) //creates and returns data-join with your data array(fruits)
-        .enter() // computes the () selection of circles with data elements
-        .append("circle")
-        .attr("fill", (d) => colorScale(d.type))
-        .attr("cx", (d, i) => i * 120 + 60)
-        .attr("cy", height / 2)
-        .attr("r", (d) => radiusScale(d.type));
-      svgElement
-        .selectAll("circle")
-        .attr("fill", (d) => colorScale(d.type))
-        .attr("r", (d) => radiusScale(d.type));
-
-      svgElement.selectAll("circle").data(fruits).exit().remove();
-    };
-
     const makeFruit = (type) => ({ type });
     const fruits = d3.range(5).map(() => makeFruit("apple"));
 
-    renderViz(svgElement, { fruits });
+    // render fruits
+    const render = () => {
+      renderViz(svgElement, { fruits, height });
+    };
+    render();
 
-    // state manipulation logic (eat an apple)
+    // state manipulation logic (update: eat an apple)
     setTimeout(() => {
       fruits.pop();
-      renderViz(svgElement, { fruits });
+      //   renderViz(svgElement, { fruits });
+      render();
     }, 1000);
 
-    // state manipulation logic (replace apple with lemon)
+    // state manipulation logic (update: replace apple with lemon)
     setTimeout(() => {
       fruits[2].type = "lemon";
-      renderViz(svgElement, { fruits });
+      //   renderViz(svgElement, { fruits });
+      render();
     }, 2000);
   }, []);
 
