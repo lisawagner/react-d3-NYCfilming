@@ -6,8 +6,8 @@ import { NestedFruitUpdate } from "./components/Sample/NestedFruitUpdates";
 const App = () => {
   return (
     <div className="App">
-      <NestedFruitUpdate />
       <FruitUpdate />
+      <NestedFruitUpdate />
     </div>
   );
 };

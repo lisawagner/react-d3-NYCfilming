@@ -16,10 +16,17 @@ const radiusScale = d3
   .domain(["apple", "lemon"])
   .range([50, 30]);
 
-const xPosition = (d, i) => i * 120 + 60;
-
 // render logic component
-const renderViz = (svgElement, { fruits, height }) => {
+const renderViz = (svgElement, { fruits, width, height }) => {
+  const bowl = svgElement
+    .selectAll("rect")
+    .data([null]) // this with enter() stuffs the bowl to the back
+    .enter()
+    .append("rect")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("rx", 60);
+
   const groups = svgElement
     .selectAll("g") // makes empty selection
     .data(fruits, (d) => d.id); //creates & returns data-join with data array(fruits)
@@ -49,7 +56,7 @@ export const NestedFruitUpdate = () => {
   const svgRef = React.useRef();
 
   React.useEffect(() => {
-    const width = 700;
+    const width = 600;
     const height = 200;
 
     const svgElement = d3
@@ -62,7 +69,7 @@ export const NestedFruitUpdate = () => {
 
     // render fruits
     const render = () => {
-      renderViz(svgElement, { fruits, height });
+      renderViz(svgElement, { fruits, width, height });
     };
     render();
 

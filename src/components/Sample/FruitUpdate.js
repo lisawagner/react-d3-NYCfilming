@@ -19,7 +19,7 @@ const radiusScale = d3
 const xPosition = (d, i) => i * 120 + 60;
 
 // render logic component
-const renderViz = (svgElement, { fruits, height }) => {
+const fruitBowl = (svgElement, { fruits, height }) => {
   const circles = svgElement
     .selectAll("circle") // makes empty selection
     .data(fruits, (d) => d.id); //creates and returns data-join with your data array(fruits)
@@ -31,6 +31,11 @@ const renderViz = (svgElement, { fruits, height }) => {
     .attr("r", 0)
     .merge(circles) //merges the enter and update selections
     .attr("fill", (d) => colorScale(d.type))
+    // add onclick event listener
+    .on("click", () => {
+      // add tags onclick
+      console.log("clicked");
+    })
     .transition()
     .duration(1000)
     .attr("cx", xPosition)
@@ -53,29 +58,30 @@ export const FruitUpdate = () => {
 
     const makeFruit = (type) => ({ type, id: Math.random() });
     let fruits = d3.range(5).map(() => makeFruit("apple"));
+    let selectedFruit = null;
 
     // render fruits
-    const render = () => {
-      renderViz(svgElement, { fruits, height });
+    const renderViz = () => {
+      fruitBowl(svgElement, { fruits, height });
     };
-    render();
+    renderViz();
 
     // state manipulation logic (update: eat an apple)
     setTimeout(() => {
       fruits.pop();
-      render();
+      renderViz();
     }, 1000);
 
     // state manipulation logic (update: replace apple with lemon)
     setTimeout(() => {
       fruits[2].type = "lemon";
-      render();
+      renderViz();
     }, 2000);
 
     // state manipulation logic (update: eat another apple)
     setTimeout(() => {
       fruits = fruits.filter((d, i) => i !== 1);
-      render();
+      renderViz();
     }, 3000);
   }, []);
 
