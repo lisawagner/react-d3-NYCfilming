@@ -9,8 +9,6 @@ const initialPosition = { x: width / 2, y: height / 2 };
 export const TestGraph = () => {
   const svgRef = React.useRef();
 
-  const [mousePosition, setMousePosition] = React.useState(initialPosition);
-
   //   const fetchData = async (url) => {
   //     const response = await fetch(url);
   //     return await response.json();
@@ -23,22 +21,10 @@ export const TestGraph = () => {
   //     console.log(text);
   //   });
 
-  const handleMouseMove = (event) => {
-    const { clientX, clientY } = event;
-    setMousePosition({ x: clientX, y: clientY });
-  };
-
   return (
     <div>
       <h1>Haroo!</h1>
-      <svg
-        width={width}
-        height={height}
-        ref={svgRef}
-        onMouseMove={handleMouseMove}
-      >
-        <circle cx={mousePosition.x} cy={mousePosition.y} r={circleRadius} />
-      </svg>
+      <svg ref={svgRef}></svg>
     </div>
   );
 };

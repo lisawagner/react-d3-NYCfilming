@@ -1,4 +1,5 @@
 import "./App.css";
+import { Follower } from "./components/Sample/Follower";
 import { TestGraph } from "./components/Sample/TestGraph";
 // import { LineRacer } from "./components/SpeedRacer/LineRacer";
 // import { FruitUpdate } from "./components/Sample/FruitUpdate";
@@ -10,6 +11,7 @@ const App = () => {
       {/* <FruitUpdate />
       <NestedFruitUpdate /> */}
       <TestGraph />
+      <Follower />
     </div>
   );
 };
