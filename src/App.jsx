@@ -1,5 +1,5 @@
 import "./App.css";
-import { Follower } from "./components/Sample/Follower";
+// import { Follower } from "./components/Sample/Follower";
 import { TestGraph } from "./components/Sample/TestGraph";
 // import { LineRacer } from "./components/SpeedRacer/LineRacer";
 // import { FruitUpdate } from "./components/Sample/FruitUpdate";
@@ -8,10 +8,11 @@ import { TestGraph } from "./components/Sample/TestGraph";
 const App = () => {
   return (
     <div className="App">
+      <TestGraph />
       {/* <FruitUpdate />
       <NestedFruitUpdate /> */}
-      <TestGraph />
-      <Follower />
+
+      {/* <Follower /> */}
     </div>
   );
 };

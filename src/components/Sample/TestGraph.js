@@ -1,25 +1,23 @@
 import React from "react";
 import * as d3 from "d3";
 
-const width = 960;
-const height = 500;
-const circleRadius = 20;
-const initialPosition = { x: width / 2, y: height / 2 };
+// const width = 960;
+// const height = 500;
 
 export const TestGraph = () => {
   const svgRef = React.useRef();
 
-  //   const fetchData = async (url) => {
-  //     const response = await fetch(url);
-  //     return await response.json();
-  //   };
+  const fetchData = async (url) => {
+    const response = await fetch(url);
+    return await response.json();
+  };
 
-  //   const jsonURL =
-  //     "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
+  const jsonURL =
+    "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
-  //   fetchData(jsonURL).then((text) => {
-  //     console.log(text);
-  //   });
+  fetchData(jsonURL).then((text) => {
+    console.log(text);
+  });
 
   return (
     <div>
