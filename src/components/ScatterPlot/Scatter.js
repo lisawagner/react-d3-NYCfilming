@@ -6,7 +6,6 @@ import axios from "axios";
 import "./styles.css";
 
 export const SpeedRacer = () => {
-  //   const { useEffect, useState, useRef } = React;
   const [cyclist, setCyclist] = React.useState([
     {
       Time: "0",
@@ -20,12 +19,12 @@ export const SpeedRacer = () => {
     },
   ]);
 
-  const urlData =
+  const jsonURL =
     "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
   React.useEffect(() => {
     axios
-      .get(urlData)
+      .get(jsonURL)
       .then((response) => response.data)
       .then((data) => {
         setCyclist(data);
@@ -60,13 +59,13 @@ export const SpeedRacer = () => {
 
   const svg = d3.select(svgRef.current);
 
-  //   const xAxis = svg
-  //     .select("#x-axis")
-  //     .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")));
+  const xAxis = svg
+    .select("#x-axis")
+    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")));
 
-  //   const yAxis = svg
-  //     .select("#y-axis")
-  //     .call(d3.axisLeft(y).tickFormat(d3.timeFormat("%M:%S")));
+  const yAxis = svg
+    .select("#y-axis")
+    .call(d3.axisLeft(y).tickFormat(d3.timeFormat("%M:%S")));
 
   const tooltip = d3.select(tooltipRef.current).style("opacity", 0);
 
