@@ -1,6 +1,7 @@
 import "./App.css";
 // import { Follower } from "./components/Sample/Follower";
-import { TestGraph } from "./components/Sample/TestGraph";
+// import { TestGraph } from "./components/Sample/TestGraph";
+import { SpeedRacer } from "./components/ScatterPlot/Scatter";
 // import { LineRacer } from "./components/SpeedRacer/LineRacer";
 // import { FruitUpdate } from "./components/Sample/FruitUpdate";
 // import { NestedFruitUpdate } from "./components/Sample/NestedFruitUpdates";
@@ -8,7 +9,8 @@ import { TestGraph } from "./components/Sample/TestGraph";
 const App = () => {
   return (
     <div className="App">
-      <TestGraph />
+      {/* <TestGraph /> */}
+      <SpeedRacer />
       {/* <FruitUpdate />
       <NestedFruitUpdate /> */}
 

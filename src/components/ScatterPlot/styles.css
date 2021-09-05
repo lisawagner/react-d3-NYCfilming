@@ -1,0 +1,66 @@
+#container {
+  position: relative;
+  height: 100vh;
+  background-color: #9fa8da;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#scatterplot {
+  max-width: 700px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+}
+
+#header-wrapper {
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+#chart-wrapper {
+  background-color: #fff;
+}
+svg {
+  pointer-events: none;
+}
+#dots circle {
+  pointer-events: auto;
+  opacity: 0.5;
+}
+#dots circle:hover {
+  opacity: 1;
+}
+#legend {
+  position: absolute;
+  right: 0;
+  bottom: 20%;
+  padding-right: 30px;
+  box-sizing: border-box;
+}
+#legend p {
+  font-size: 14px;
+  max-width: 200px;
+}
+.dot-legend {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+/* 
+#tooltip {
+  position: absolute;
+  background-color: white;
+  width: 300px;
+  height: auto;
+  box-shadow: 2px 2px 3px rgba(#212121, 0.4);
+  padding: 10px;
+  box-sizing: border-box;
+}
+#tooltip p {
+  margin: 0 auto;
+} */
