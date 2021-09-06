@@ -1,0 +1,38 @@
+.petal-container {
+  font-family: "Poppins", sans-serif;
+}
+pre {
+  font-size: 7em;
+}
+
+.tick line {
+  stroke: #c0c0bb;
+}
+.tick text {
+  fill: #635f5d;
+}
+.axis-label,
+.dropdown-label {
+  font-size: 2rem;
+  fill: #635f5d;
+  color: #635f5d;
+}
+.dropdown-label {
+  margin-left: 50px;
+  margin-right: 10px;
+}
+.dropdown-root {
+  font-size: 1.25rem;
+  display: inline-block;
+  width: 30vw;
+}
+.Dropdown-menu {
+  max-height: 50vw;
+}
+.menu-container {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}

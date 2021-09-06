@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { json } from "d3";
+import { csv } from "d3";
 
-const jsonUrl =
-  "https://gist.githubusercontent.com/lisawagner/f7cbb8bae9743cca9c12c7b9682adfee/raw/be92f9968fb97da543f3425652a7a128121d7b0b/iris_data.json";
+const csvUrl =
+  "https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv";
 
 export const useData = () => {
   const [data, setData] = useState(null);
@@ -15,7 +15,7 @@ export const useData = () => {
       d.petal_width = +d.petal_width;
       return d;
     };
-    json(jsonUrl, row).then(setData);
+    csv(csvUrl, row).then(setData);
   }, []);
 
   return data;

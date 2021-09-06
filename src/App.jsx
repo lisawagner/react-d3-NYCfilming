@@ -1,12 +1,10 @@
 import "./App.css";
-import { PetalPlot } from "./components/PetalPlot/PetalPlot";
-// import { Plotter } from "./components/New/Plotter";
+import { IrisScatterPlot } from "./components/Iris/IrisScatterPlot";
 
 const App = () => {
   return (
     <div className="App">
-      {/* <Plotter /> */}
-      <PetalPlot />
+      <IrisScatterPlot />
     </div>
   );
 };
