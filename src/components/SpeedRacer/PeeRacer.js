@@ -127,10 +127,10 @@ export const PeeRacer = () => {
   };
 
   d3.json(jsonURL).then((data) => {
-    // data.forEach((d) => {
-    //   // + parses strings into num
-    //   d.Year = +d.Year;
-    // });
+    data.forEach((d) => {
+      // + parses strings into num
+      d.Year = +d.Year;
+    });
     render(data);
   });
 

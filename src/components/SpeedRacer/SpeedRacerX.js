@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React from "react";
 import * as d3 from "d3";
 import { format } from "d3";
 import "./styles.css";
@@ -6,9 +6,48 @@ import "./styles.css";
 const jsonURL =
   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
+const useData = () => {
+  const [data, setData] = React.useState();
+
+  React.useEffect(() => {
+    fetch(jsonURL)
+      .then((res) => res.json())
+      .then((bikers) => {
+        const data = bikers.map((d) => {
+          return {
+            name: d.Name,
+            year: +d.Year,
+            time: +d.Time,
+          };
+        });
+        console.log("[data]", data);
+        setData(data);
+      });
+  }, []);
+  return data;
+
+  // fetch(jsonURL)
+  // .then((response) => {
+  //   return response.json();
+  // })
+  // .then((bikers) => {
+  // bikers.map((biker) => console.log("Dudes:", biker.Name));
+  // const Years = bikers.map((biker) => biker.Year);
+  // console.log(Years);
+
+  // d3.json(jsonURL).then((data) => {
+  //   data.forEach((d) => {
+  //     // + parses strings into num
+  //     d.Year = +d.Year;
+  //   });
+  //   render(data);
+  // });
+};
+
 export const SpeedRacerX = () => {
   // useRef - needed in React w/D3
-  const svgRef = useRef(null);
+  const svgRef = React.useRef(null);
+  const data = useData();
 
   // dimensions
   const width = 960;
@@ -20,7 +59,7 @@ export const SpeedRacerX = () => {
   const svgHeight = height + margin.top + margin.bottom;
 
   // useEffect instead of componentDidMount
-  useEffect(() => {
+  React.useEffect(() => {
     const xValue = (d) => d.Seconds;
     const yValue = (d) => d.Place;
     // set up canvas scale
@@ -93,16 +132,9 @@ export const SpeedRacerX = () => {
     //     // + parses strings into num
     //     d.Year = +d.Year;
     //   });
-    //   Render(data);
+    //   render(data);
     // });
   }, [data]);
-
-  // useEffect(() => {
-  //   effect
-  //   return () => {
-  //     cleanup
-  //   }
-  // }, [input])
 
   // fetch(jsonURL)
   // .then((response) => {
