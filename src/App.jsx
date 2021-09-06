@@ -1,10 +1,12 @@
 import "./App.css";
-import { Plotter } from "./components/New/Plotter";
+import { PetalPlot } from "./components/PetalPlot/PetalPlot";
+// import { Plotter } from "./components/New/Plotter";
 
 const App = () => {
   return (
     <div className="App">
-      <Plotter />
+      {/* <Plotter /> */}
+      <PetalPlot />
     </div>
   );
 };
