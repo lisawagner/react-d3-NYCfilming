@@ -6,7 +6,7 @@ import "./styles.css";
 const jsonURL =
   "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
-export const SpeedRacer = () => {
+export const SpeedRacerX = () => {
   // useRef - needed in React w/D3
   const svgRef = useRef(null);
 

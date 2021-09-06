@@ -34,38 +34,38 @@ export const SpeedRacer = () => {
   const svgRef = React.useRef();
   const tooltipRef = React.useRef();
 
-  const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-  const svgDims = { width: 700, height: 400 };
-  const width = svgDims.width - margin.left - margin.right;
-  const height = svgDims.height - margin.top - margin.bottom;
+  const margin = { top: 10, right: 100, bottom: 30, left: 50 };
+  const svgDimensions = { width: 960, height: 500 };
+  const width = svgDimensions.width - margin.left - margin.right;
+  const height = svgDimensions.height - margin.top - margin.bottom;
+  const radius = 4;
 
-  const parseTime = (rawTime) => {
+  const parseTime = (timeData) => {
     let time = new Date();
-    let [mm, ss] = rawTime.split(":");
+    let [mm, ss] = timeData.split(":");
     time.setMinutes(mm);
     time.setSeconds(ss);
     return time;
   };
 
-  const x = d3
+  const xField = d3
     .scaleTime()
     .domain(d3.extent(cyclist.map((d) => new Date(d.Year, 0, 0))))
     .range([0, width]);
 
-  const y = d3
+  const yField = d3
     .scaleTime()
     .domain(d3.extent(cyclist.map((d) => parseTime(d.Time))))
     .range([height, 0]);
 
-  const svg = d3.select(svgRef.current);
-
-  const xAxis = svg
+  const svgPlot = d3.select(svgRef.current);
+  svgPlot
     .select("#x-axis")
-    .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")));
+    .call(d3.axisBottom(xField).tickFormat(d3.timeFormat("%Y")));
 
-  const yAxis = svg
+  svgPlot
     .select("#y-axis")
-    .call(d3.axisLeft(y).tickFormat(d3.timeFormat("%M:%S")));
+    .call(d3.axisLeft(yField).tickFormat(d3.timeFormat("%M:%S")));
 
   const tooltip = d3.select(tooltipRef.current).style("opacity", 0);
 
@@ -91,27 +91,28 @@ export const SpeedRacer = () => {
 
   const Dots = ({ data }) =>
     data.map((d) => {
-      const yearDateFormat = new Date(d.Year, 0, 0);
-      const timeDateFormat = parseTime(d.Time);
+      const yearFormat = new Date(d.Year, 0, 0);
+      const timeFormat = parseTime(d.Time);
       return (
         <circle
           className="dot"
-          cx={x(yearDateFormat)}
-          cy={y(timeDateFormat)}
-          r="5"
+          cx={xField(yearFormat)}
+          cy={yField(timeFormat)}
+          // r={radius}
+          r={d.Doping !== "" ? `${radius}` : `${radius + 2}`}
           fill={d.Doping !== "" ? "#673ab7" : "#26c6da"}
-          data-xvalue={yearDateFormat}
-          data-yvalue={timeDateFormat}
+          data-xvalue={yearFormat}
+          data-yvalue={timeFormat}
           onMouseOver={(e) => handleCircleHover(d, e)}
           onMouseLeave={handleCircleUnhover}
         ></circle>
       );
     });
 
-  const Dot = ({ hadDoped }) => (
+  const Dot = ({ Doper }) => (
     <div
       className="dot-legend"
-      style={{ backgroundColor: hadDoped ? "#673ab7" : "#26c6da" }}
+      style={{ backgroundColor: Doper ? "#673ab7" : "#26c6da" }}
     ></div>
   );
 
@@ -124,9 +125,9 @@ export const SpeedRacer = () => {
         </div>
         <div id="chart-wrapper">
           <svg
-            width={svgDims.width}
-            height={svgDims.height}
-            viewBox={`0 0 ${svgDims.width} ${svgDims.height}`}
+            width={svgDimensions.width}
+            height={svgDimensions.height}
+            viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
             ref={svgRef}
           >
             <g id="x-axis" transform={translateXAxis}></g>
@@ -138,11 +139,11 @@ export const SpeedRacer = () => {
         </div>
         <div id="legend">
           <p>
-            <Dot hadDoped={false} />
+            <Dot Doper={false} />
             No doping alllegations
           </p>
           <p>
-            <Dot hadDoped={true} />
+            <Dot Doper={true} />
             Riders with doping allegations
           </p>
         </div>

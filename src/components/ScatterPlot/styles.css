@@ -1,4 +1,4 @@
-#container {
+/* #container {
   position: relative;
   height: 100vh;
   background-color: #9fa8da;
@@ -50,7 +50,7 @@ svg {
   border-radius: 50%;
   display: inline-block;
   margin-right: 5px;
-}
+} */
 /* 
 #tooltip {
   position: absolute;
