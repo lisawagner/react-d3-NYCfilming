@@ -10,25 +10,42 @@ const margin = { top: 10, right: 30, bottom: 75, left: 90 };
 const xAxisLabelOffset = 55;
 const yAxisLabelOffset = 50;
 
-const jsonUrl =
-  "https://gist.githubusercontent.com/lisawagner/f7cbb8bae9743cca9c12c7b9682adfee/raw/be92f9968fb97da543f3425652a7a128121d7b0b/iris_data.json";
+const jsonURL =
+  "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json";
 
 const useData = () => {
   const [data, setData] = React.useState(null);
 
   React.useEffect(() => {
-    const row = (d) => {
-      // d.sepal_length = +d.sepal_length;
-      d.sepal_width = +d.sepal_width;
-      d.petal_length = +d.petal_length;
-      // d.petal_width = +d.petal_width;
+    const cyclists = (d) => {
+      // d.Doping = d.Doping;
+      d.Year = +d.Year;
+      d.Time = d3.timeParse("%M:%S")(d.Time);
+      // d.Time = +d.Time;
+      console.log(d.Time);
       return d;
     };
-    d3.json(jsonUrl, row).then(setData);
+    d3.json(jsonURL, cyclists).then(setData);
   }, []);
 
   return data;
 };
+
+// const useData = () => {
+//   const [data, setData] = React.useState(null);
+
+//   React.useEffect(() => {
+//     const parseTime = d3.timeParse("%M:%S");
+
+//     fetch(jsonURL).then((response => response.json()).then((data) => {
+//       console.log("First:",data);
+//       // transform data
+//     })
+
+//     )
+//   }, []);
+//   return data;
+// }
 
 const AxisLeft = ({ yScale, innerWidth, tickOffset = 3 }) =>
   yScale.ticks().map((tickValue) => (
@@ -86,16 +103,16 @@ const Marks = ({
     </circle>
   ));
 
-export const PetalPlot = () => {
+export const SamplePlot = () => {
   const data = useData();
+  console.log(data);
+  const xValue = (d) => d.Year;
+  const xAxisLabel = "Year";
 
-  const xValue = (d) => d.petal_length;
-  const xAxisLabel = "Petal Length";
+  const yValue = (d) => d.Time;
+  const yAxisLabel = "Time";
 
-  const yValue = (d) => d.sepal_width;
-  const yAxisLabel = "Sepal Width";
-
-  const colorValue = (d) => d.species;
+  const colorValue = (d) => d.Doping;
 
   if (!data) {
     return <pre>Loading...</pre>;
@@ -103,8 +120,9 @@ export const PetalPlot = () => {
 
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
-  const siFormat = d3.format(".2s");
-  const xAxisTickFormat = (tickValue) => siFormat(tickValue).replace("G", "B");
+  const xAxisTickFormat = (d) =>
+    d3.timeFormat("%Y")(new Date(0).setFullYear(d));
+  const yAxisTickFormat = (d) => d.Time;
 
   const xScale = d3
     .scaleLinear()
@@ -113,8 +131,10 @@ export const PetalPlot = () => {
     .nice();
 
   const yScale = d3
-    .scaleLinear()
+    // .scaleLinear()
+    .scaleTime()
     .domain(d3.extent(data, yValue))
+    // .domain(d3.extent(data.map((d) => parseTime(d.Time))))
     .range([0, innerHeight]);
 
   const colorScale = d3
@@ -125,7 +145,7 @@ export const PetalPlot = () => {
   return (
     <>
       <div className="petal-container">
-        <span className="title">Iris Dataset</span>
+        <span className="title">Dopers Dataset</span>
         <svg width={width} height={height}>
           <g transform={`translate(${margin.left},${margin.top})`}>
             <AxisBottom
@@ -143,7 +163,12 @@ export const PetalPlot = () => {
             >
               {yAxisLabel}
             </text>
-            <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={5} />
+            <AxisLeft
+              yScale={yScale}
+              innerWidth={innerWidth}
+              tickFormat={yAxisTickFormat}
+              tickOffset={5}
+            />
             <text
               className="axis-label"
               x={innerWidth / 2}
