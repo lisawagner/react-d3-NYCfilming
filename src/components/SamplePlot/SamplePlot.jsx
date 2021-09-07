@@ -20,8 +20,8 @@ const useData = () => {
     const cyclists = (d) => {
       // d.Doping = d.Doping;
       d.Year = +d.Year;
-      d.Time = d3.timeParse("%M:%S")(d.Time);
-      // d.Time = +d.Time;
+      // d.Time = d3.timeParse("%M:%S")(d.Time);
+      d.Time = +d.Time;
       console.log(d.Time);
       return d;
     };
@@ -35,19 +35,23 @@ const useData = () => {
 //   const [data, setData] = React.useState(null);
 
 //   React.useEffect(() => {
-//     const parseTime = d3.timeParse("%M:%S");
+//     const cyclists = d3.json(jsonURL).then((data) => {
+//       data.forEach((d) => {
+//         d.Time = d3.timeParse("%M:%S")(d.Time);
+//         d.Name = d.Name;
+//         d.Year = +d.Year;
+//         d.Nationality = d.Nationality;
+//         d.Doping = d.Doping;
+//       });
+//     });
 
-//     fetch(jsonURL).then((response => response.json()).then((data) => {
-//       console.log("First:",data);
-//       // transform data
-//     })
-
-//     )
+//     d3.json(jsonURL, cyclists).then(setData);
 //   }, []);
-//   return data;
-// }
 
-const AxisLeft = ({ yScale, innerWidth, tickOffset = 3 }) =>
+//   return data;
+// };
+
+const AxisLeft = ({ yScale, innerWidth, tickFormat, tickOffset = 3 }) =>
   yScale.ticks().map((tickValue) => (
     <g className="tick" transform={`translate(0,${yScale(tickValue)})`}>
       <line x2={innerWidth} />
@@ -57,7 +61,7 @@ const AxisLeft = ({ yScale, innerWidth, tickOffset = 3 }) =>
         x={-tickOffset * 2}
         dy=".32em"
       >
-        {tickValue}
+        {tickFormat(tickValue)}
       </text>
     </g>
   ));
@@ -132,7 +136,9 @@ export const SamplePlot = () => {
 
   const yScale = d3
     // .scaleLinear()
+    // .scaleTime()
     .scaleTime()
+    // .domain(data.map((d) => d.Time))
     .domain(d3.extent(data, yValue))
     // .domain(d3.extent(data.map((d) => parseTime(d.Time))))
     .range([0, innerHeight]);
